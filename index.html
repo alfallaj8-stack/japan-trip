@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Japan Trip">
+<title>Japan Trip 2026 — Abdullah</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --osaka: #C84B31; --osaka-light: #FCEEE9; --osaka-mid: #F5A58A;
+  --kyoto: #7B4F9E; --kyoto-light: #F3EDF8; --kyoto-mid: #C4A3DC;
+  --fuji: #1A6B8A; --fuji-light: #E6F4F8; --fuji-mid: #7ABDD0;
+  --tokyo: #2D6A4F; --tokyo-light: #E8F4EE; --tokyo-mid: #81C59A;
+  --bg: #F7F5F0; --card: #FFFFFF; --text: #1A1A1A;
+  --text-muted: #888; --text-soft: #555; --border: rgba(0,0,0,0.08);
+  --radius: 20px; --radius-sm: 12px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; padding-bottom: env(safe-area-inset-bottom); overflow-x: hidden; }
+
+/* HERO */
+.hero { background: #1A1A1A; padding: 56px 24px 28px; padding-top: calc(56px + env(safe-area-inset-top)); position: relative; overflow: hidden; }
+.hero-pattern { position: absolute; inset: 0; background-image: radial-gradient(circle at 20% 50%, rgba(200,75,49,0.18) 0%, transparent 50%), radial-gradient(circle at 80% 20%, rgba(123,79,158,0.14) 0%, transparent 40%), radial-gradient(circle at 60% 80%, rgba(26,107,138,0.12) 0%, transparent 40%); }
+.hero-jp { font-family: serif; font-size: 80px; color: rgba(255,255,255,0.04); position: absolute; right: 12px; top: 50%; transform: translateY(-50%); line-height: 1; letter-spacing: 10px; }
+.hero-label { font-size: 11px; font-weight: 600; letter-spacing: 0.15em; color: rgba(255,255,255,0.4); text-transform: uppercase; margin-bottom: 6px; position: relative; }
+.hero-title { font-family: 'DM Serif Display', serif; font-size: 36px; color: #fff; line-height: 1.1; position: relative; margin-bottom: 4px; }
+.hero-name { font-size: 13px; color: rgba(255,255,255,0.45); position: relative; margin-bottom: 4px; font-weight: 300; }
+.hero-dates { font-size: 13px; color: rgba(255,255,255,0.45); position: relative; margin-bottom: 20px; font-weight: 300; }
+.hero-pills { display: flex; gap: 6px; flex-wrap: wrap; position: relative; }
+.hero-pill { font-size: 11px; font-weight: 500; padding: 4px 10px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.12); color: rgba(255,255,255,0.65); background: rgba(255,255,255,0.06); }
+
+/* COUNTDOWN */
+.cd-strip { background: #1A1A1A; padding: 0 24px 20px; display: flex; gap: 10px; }
+.cd-box { flex: 1; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: var(--radius-sm); padding: 10px; text-align: center; }
+.cd-num { font-family: 'DM Serif Display', serif; font-size: 24px; color: #fff; line-height: 1; }
+.cd-label { font-size: 9px; color: rgba(255,255,255,0.35); text-transform: uppercase; letter-spacing: 0.1em; margin-top: 2px; }
+
+/* PAGES */
+.page { display: none; padding-bottom: 100px; }
+.page.active { display: block; }
+.page-header { padding: 48px 16px 12px; padding-top: calc(48px + env(safe-area-inset-top)); }
+.page-title { font-family: 'DM Serif Display', serif; font-size: 26px; margin-bottom: 3px; }
+.page-sub { font-size: 13px; color: var(--text-muted); margin-bottom: 16px; }
+
+/* SECTION */
+.section { padding: 0 16px; margin-top: 16px; }
+.sec-title { font-size: 10px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 8px; padding: 0 2px; }
+
+/* FLIGHT CARD */
+.flight-card { border-radius: var(--radius); padding: 18px; margin-bottom: 10px; position: relative; overflow: hidden; }
+.fc-dark { background: #1A1A1A; }
+.fc-navy { background: #1E2D3D; }
+.fc-bg1 { position: absolute; inset: 0; background: radial-gradient(circle at 70% 30%, rgba(200,75,49,0.2) 0%, transparent 60%); }
+.fc-bg2 { position: absolute; inset: 0; background: radial-gradient(circle at 30% 70%, rgba(26,107,138,0.25) 0%, transparent 60%); }
+.fc-badge { position: absolute; top: 14px; right: 14px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; padding: 3px 9px; font-size: 10px; font-weight: 600; color: rgba(255,255,255,0.6); letter-spacing: 0.06em; text-transform: uppercase; }
+.fc-row { display: flex; align-items: center; gap: 8px; position: relative; margin-bottom: 14px; }
+.fc-airport { font-family: 'DM Serif Display', serif; font-size: 30px; color: #fff; }
+.fc-city { font-size: 10px; color: rgba(255,255,255,0.35); margin-bottom: 2px; }
+.fc-time { font-size: 12px; color: rgba(255,255,255,0.5); }
+.fc-mid { flex: 1; padding: 0 8px; }
+.fc-line-wrap { display: flex; align-items: center; gap: 4px; }
+.fc-line { flex: 1; height: 1px; background: rgba(255,255,255,0.18); }
+.fc-plane { font-size: 14px; }
+.fc-dur { font-size: 10px; color: rgba(255,255,255,0.3); text-align: center; margin-top: 3px; }
+.fc-meta { position: relative; display: flex; gap: 14px; flex-wrap: wrap; }
+.fc-mi { }
+.fc-ml { font-size: 10px; color: rgba(255,255,255,0.35); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 1px; }
+.fc-mv { font-size: 12px; font-weight: 500; color: #fff; }
+
+/* CITY TABS */
+.city-scroll { display: flex; gap: 7px; overflow-x: auto; padding: 0 16px 4px; margin-top: 16px; scrollbar-width: none; }
+.city-scroll::-webkit-scrollbar { display: none; }
+.city-tab { flex-shrink: 0; padding: 7px 16px; border-radius: 20px; font-size: 13px; font-weight: 500; cursor: pointer; border: 1.5px solid transparent; background: var(--card); color: var(--text-muted); transition: all 0.2s; }
+.city-tab[data-city="osaka"].active { background: var(--osaka); border-color: var(--osaka); color: #fff; }
+.city-tab[data-city="kyoto"].active { background: var(--kyoto); border-color: var(--kyoto); color: #fff; }
+.city-tab[data-city="fuji"].active { background: var(--fuji); border-color: var(--fuji); color: #fff; }
+.city-tab[data-city="tokyo"].active { background: var(--tokyo); border-color: var(--tokyo); color: #fff; }
+.city-panel { display: none; padding: 12px 16px 0; }
+.city-panel.active { display: block; }
+
+/* START BANNER */
+.start-banner { border-radius: var(--radius-sm); padding: 9px 12px; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; border: 1px solid; }
+.sdot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.sinfo { flex: 1; }
+.slabel { font-size: 10px; font-weight: 600; margin-bottom: 1px; }
+.sstation { font-size: 12px; font-weight: 500; color: var(--text); }
+.maps-btn { font-size: 11px; padding: 4px 10px; border-radius: 20px; border: 1px solid; color: inherit; text-decoration: none; background: white; white-space: nowrap; }
+
+/* GPS CARD */
+.gps-card { background: var(--card); border-radius: var(--radius); border: 1px solid var(--border); margin-bottom: 10px; overflow: hidden; }
+.gps-item { display: flex; align-items: center; gap: 10px; padding: 12px 16px; border-bottom: 1px solid var(--border); text-decoration: none; color: inherit; cursor: pointer; transition: background 0.15s; }
+.gps-item:last-child { border-bottom: none; }
+.gps-item:active { background: var(--bg); }
+.gps-num { width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; flex-shrink: 0; }
+.gps-info { flex: 1; }
+.gps-name { font-size: 13px; font-weight: 500; margin-bottom: 1px; }
+.gps-detail { font-size: 11px; color: var(--text-muted); }
+.gps-arrow { font-size: 14px; color: var(--text-muted); flex-shrink: 0; }
+
+/* DAY CARDS */
+.day-block { margin-bottom: 14px; }
+.day-label { font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; padding: 0 2px; margin-bottom: 6px; }
+.day-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 11px 14px; display: flex; gap: 12px; align-items: flex-start; margin-bottom: 6px; }
+.day-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; width: 22px; text-align: center; }
+.day-content { flex: 1; }
+.day-time { font-size: 10px; color: var(--text-muted); margin-bottom: 1px; font-weight: 500; }
+.day-title { font-size: 13px; font-weight: 500; color: var(--text); margin-bottom: 2px; }
+.day-desc { font-size: 11px; color: var(--text-soft); line-height: 1.5; }
+.day-ref { font-size: 10px; color: var(--text-muted); margin-top: 3px; font-family: monospace; }
+.confirmed-badge { display: inline-block; font-size: 9px; font-weight: 600; padding: 2px 6px; border-radius: 20px; background: #E8F5E9; color: #2D6A4F; margin-left: 5px; vertical-align: middle; }
+.pending-badge { display: inline-block; font-size: 9px; font-weight: 600; padding: 2px 6px; border-radius: 20px; background: #FFF8E1; color: #F57F17; margin-left: 5px; vertical-align: middle; }
+
+/* BOOKING CARDS */
+.bcard { background: var(--card); border-radius: var(--radius); margin-bottom: 10px; overflow: hidden; border: 1px solid var(--border); }
+.bcard-header { padding: 14px 16px 12px; display: flex; align-items: center; gap: 10px; }
+.bcard-icon { width: 40px; height: 40px; border-radius: 11px; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
+.bcard-meta { flex: 1; }
+.bcard-type { font-size: 10px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 2px; }
+.bcard-name { font-size: 15px; font-weight: 600; line-height: 1.2; }
+.bcard-sub { font-size: 11px; color: var(--text-muted); margin-top: 1px; }
+.bcard-status { font-size: 10px; font-weight: 600; padding: 4px 9px; border-radius: 20px; }
+.s-confirmed { background: #E8F5E9; color: #2D6A4F; }
+.bcard-div { height: 1px; background: var(--border); margin: 0 16px; }
+.bcard-rows { padding: 10px 16px 14px; }
+.bcard-row { display: flex; justify-content: space-between; align-items: center; padding: 4px 0; }
+.brl { font-size: 11px; color: var(--text-muted); }
+.brv { font-size: 11px; font-weight: 500; color: var(--text); text-align: right; max-width: 58%; }
+.bcard-footer { padding: 10px 16px; border-top: 1px solid var(--border); display: flex; gap: 8px; }
+.bcard-btn { flex: 1; padding: 9px; border-radius: var(--radius-sm); font-size: 12px; font-weight: 500; text-align: center; text-decoration: none; cursor: pointer; border: none; font-family: 'DM Sans', sans-serif; }
+.btn-primary { color: #fff; }
+.btn-secondary { background: var(--bg); color: var(--text-soft); }
+.btn-osaka { background: var(--osaka); }
+.btn-fuji { background: var(--fuji); }
+.btn-tokyo { background: var(--tokyo); }
+
+/* CHECKLIST */
+.check-item { display: flex; align-items: center; gap: 10px; background: var(--card); border-radius: var(--radius-sm); padding: 12px 14px; margin-bottom: 7px; border: 1px solid var(--border); cursor: pointer; transition: opacity 0.2s; }
+.check-box { width: 22px; height: 22px; border-radius: 50%; border: 2px solid var(--border); display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: all 0.2s; font-size: 11px; }
+.check-item.done { opacity: 0.5; }
+.check-item.done .check-box { background: #2D6A4F; border-color: #2D6A4F; color: #fff; }
+.check-text { font-size: 13px; }
+.check-item.done .check-text { text-decoration: line-through; color: var(--text-muted); }
+
+/* BOTTOM NAV */
+.bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: rgba(247,245,240,0.93); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-top: 1px solid var(--border); display: flex; padding-bottom: env(safe-area-inset-bottom); z-index: 100; }
+.nav-item { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 9px 4px 7px; cursor: pointer; border: none; background: none; font-family: 'DM Sans', sans-serif; }
+.nav-icon { font-size: 20px; margin-bottom: 2px; }
+.nav-label { font-size: 10px; color: var(--text-muted); font-weight: 500; }
+.nav-item.active .nav-label { color: var(--text); font-weight: 600; }
+
+/* COLORS */
+.c-osaka { color: var(--osaka); } .c-kyoto { color: var(--kyoto); } .c-fuji { color: var(--fuji); } .c-tokyo { color: var(--tokyo); }
+.bg-osaka { background: var(--osaka-light); } .bg-kyoto { background: var(--kyoto-light); } .bg-fuji { background: var(--fuji-light); } .bg-tokyo { background: var(--tokyo-light); }
+.num-osaka { background: var(--osaka-light); color: var(--osaka); } .num-kyoto { background: var(--kyoto-light); color: var(--kyoto); } .num-fuji { background: var(--fuji-light); color: var(--fuji); } .num-tokyo { background: var(--tokyo-light); color: var(--tokyo); }
+.icon-osaka { background: var(--osaka-light); } .icon-kyoto { background: var(--kyoto-light); } .icon-fuji { background: var(--fuji-light); } .icon-tokyo { background: var(--tokyo-light); }
+.dest-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); margin: 10px 0; overflow: hidden; }
+.dest-header { padding: 13px 14px 10px; display: flex; align-items: flex-start; gap: 10px; }
+.dest-num { width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600; flex-shrink: 0; margin-top: 1px; }
+.dest-info { flex: 1; }
+.dest-name { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 2px; }
+.dest-when { font-size: 11px; color: var(--text-muted); }
+.dest-tags { display: flex; gap: 5px; flex-wrap: wrap; padding: 0 14px 10px; }
+.dtag { font-size: 10px; padding: 3px 9px; border-radius: 20px; border: 1px solid; font-weight: 500; }
+.dtag-uber { background: #F5F5F5; border-color: #DDD; color: #444; }
+.dtag-walk { background: #E8F4EE; border-color: #81C59A; color: #2D6A4F; }
+.dtag-metro { background: #E6F1FB; border-color: #85B7EB; color: #185FA5; }
+.dtag-bus { background: #FAEEDA; border-color: #EF9F27; color: #854F0B; }
+.dtag-taxi { background: #FFF8E1; border-color: #FFD54F; color: #E65100; }
+.dest-btns { display: flex; gap: 7px; padding: 10px 14px 13px; border-top: 1px solid var(--border); }
+.dest-btn { flex: 1; padding: 9px 6px; border-radius: var(--radius-sm); font-size: 11px; font-weight: 500; text-align: center; text-decoration: none; border: none; font-family: 'DM Sans', sans-serif; cursor: pointer; display: block; }
+.dest-btn-transit { background: #1A1A1A; color: #fff; }
+.dest-btn-maps { background: var(--bg); color: var(--text); border: 1px solid var(--border); }
+.dest-btn-uber { background: #fff; color: #1A1A1A; border: 1px solid var(--border); }
+</style>
+</head>
+<body>
+
+<!-- PAGE: HOME -->
+<div class="page active" id="page-home">
+  <div class="hero">
+    <div class="hero-pattern"></div>
+    <div class="hero-jp">日本</div>
+    <div class="hero-label">Your journey</div>
+    <div class="hero-title">Trip to Japan</div>
+    <div class="hero-name">Mr Abdullah Alfallaj</div>
+    <div class="hero-dates">28 May – 12 June 2026 &nbsp;·&nbsp; 15 days &nbsp;·&nbsp; Etihad Airways</div>
+    <div class="hero-pills">
+      <span class="hero-pill">Ref: 9VD327</span>
+      <span class="hero-pill">4 cities</span>
+      <span class="hero-pill">Onsen stay</span>
+      <span class="hero-pill">2 pax</span>
+    </div>
+  </div>
+  <div class="cd-strip">
+    <div class="cd-box"><div class="cd-num" id="cd-d">--</div><div class="cd-label">Days</div></div>
+    <div class="cd-box"><div class="cd-num" id="cd-h">--</div><div class="cd-label">Hours</div></div>
+    <div class="cd-box"><div class="cd-num" id="cd-m">--</div><div class="cd-label">Mins</div></div>
+    <div class="cd-box"><div class="cd-num" id="cd-s">--</div><div class="cd-label">Secs</div></div>
+  </div>
+
+  <div class="section">
+    <div class="sec-title">Outbound flights</div>
+    <div class="flight-card fc-dark">
+      <div class="fc-bg1"></div>
+      <div class="fc-badge">Confirmed</div>
+      <div class="fc-row">
+        <div><div class="fc-city">Riyadh</div><div class="fc-airport">RUH</div><div class="fc-time">16:50 · T5 · Seat 20F</div></div>
+        <div class="fc-mid"><div class="fc-line-wrap"><div class="fc-line"></div><div class="fc-plane">✈</div><div class="fc-line"></div></div><div class="fc-dur">EY 556 · 1h 55m · Nonstop · A321Neo</div></div>
+        <div style="text-align:right;"><div class="fc-city">Abu Dhabi</div><div class="fc-airport">AUH</div><div class="fc-time">19:45 · T-A</div></div>
+      </div>
+      <div class="fc-row">
+        <div><div class="fc-city">Abu Dhabi</div><div class="fc-airport">AUH</div><div class="fc-time">21:10 · T-A · Seat 32J</div></div>
+        <div class="fc-mid"><div class="fc-line-wrap"><div class="fc-line"></div><div class="fc-plane">✈</div><div class="fc-line"></div></div><div class="fc-dur">EY 814 · 9h 40m · Nonstop · B787-9</div></div>
+        <div style="text-align:right;"><div class="fc-city">Osaka</div><div class="fc-airport">KIX</div><div class="fc-time">11:50+1 · T1</div></div>
+      </div>
+      <div class="fc-meta">
+        <div class="fc-mi"><div class="fc-ml">Date</div><div class="fc-mv">28 May 2026</div></div>
+        <div class="fc-mi"><div class="fc-ml">Ref</div><div class="fc-mv">9VD327</div></div>
+        <div class="fc-mi"><div class="fc-ml">Ticket</div><div class="fc-mv">607 2415899190</div></div>
+      </div>
+    </div>
+
+    <div class="sec-title" style="margin-top:14px;">Return flights</div>
+    <div class="flight-card fc-navy">
+      <div class="fc-bg2"></div>
+      <div class="fc-badge">Confirmed</div>
+      <div class="fc-row">
+        <div><div class="fc-city">Tokyo</div><div class="fc-airport">NRT</div><div class="fc-time">18:15 · T1 · Seat 22K</div></div>
+        <div class="fc-mid"><div class="fc-line-wrap"><div class="fc-line"></div><div class="fc-plane">✈</div><div class="fc-line"></div></div><div class="fc-dur">EY 801 · 11h 05m · Nonstop · A350-1000</div></div>
+        <div style="text-align:right;"><div class="fc-city">Abu Dhabi</div><div class="fc-airport">AUH</div><div class="fc-time">00:20+1 · T-A</div></div>
+      </div>
+      <div class="fc-row">
+        <div><div class="fc-city">Abu Dhabi</div><div class="fc-airport">AUH</div><div class="fc-time">02:00 · T-A · Seat 30F</div></div>
+        <div class="fc-mid"><div class="fc-line-wrap"><div class="fc-line"></div><div class="fc-plane">✈</div><div class="fc-line"></div></div><div class="fc-dur">EY 551 · 1h 45m · Nonstop · A320</div></div>
+        <div style="text-align:right;"><div class="fc-city">Riyadh</div><div class="fc-airport">RUH</div><div class="fc-time">02:45 · T5</div></div>
+      </div>
+      <div class="fc-meta">
+        <div class="fc-mi"><div class="fc-ml">Date</div><div class="fc-mv">11–12 Jun 2026</div></div>
+        <div class="fc-mi"><div class="fc-ml">Ref</div><div class="fc-mv">9VD327</div></div>
+        <div class="fc-mi"><div class="fc-ml">Ticket</div><div class="fc-mv">607 2415899191</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="sec-title">Trip overview</div>
+    <div class="gps-card">
+      <div class="gps-item" onclick="showPage('itinerary')">
+        <div class="gps-num num-osaka">1</div>
+        <div class="gps-info"><div class="gps-name c-osaka">Osaka</div><div class="gps-detail">29 May – 2 Jun · 4 nights · Candeo Hotels Osaka The Tower</div></div>
+        <div class="gps-arrow">›</div>
+      </div>
+      <div class="gps-item" onclick="showPage('itinerary')">
+        <div class="gps-num num-kyoto">2</div>
+        <div class="gps-info"><div class="gps-name c-kyoto">Kyoto</div><div class="gps-detail">31 May · Day trip · Arashiyama + Yamazaki Whisky</div></div>
+        <div class="gps-arrow">›</div>
+      </div>
+      <div class="gps-item" onclick="showPage('itinerary')">
+        <div class="gps-num num-fuji">3</div>
+        <div class="gps-info"><div class="gps-name c-fuji">Fujikawaguchiko</div><div class="gps-detail">2–4 Jun · 2 nights · Rakuyu Ryokan · Private Onsen</div></div>
+        <div class="gps-arrow">›</div>
+      </div>
+      <div class="gps-item" onclick="showPage('itinerary')">
+        <div class="gps-num num-tokyo">4</div>
+        <div class="gps-info"><div class="gps-name c-tokyo">Tokyo</div><div class="gps-detail">4–11 Jun · 7 nights · Shiba Park Hotel · Onarimon</div></div>
+        <div class="gps-arrow">›</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="sec-title" style="color:var(--osaka);">🏯 Osaka · 29 May – 2 June</div>
+
+    <div class="day-block">
+      <div class="day-label c-osaka">29 May · Thursday · Arrival</div>
+      <div class="day-card"><div class="day-icon">✈️</div><div class="day-content"><div class="day-time">16:50 RUH → 11:50+1 KIX</div><div class="day-title">Etihad EY556 + EY814 <span class="confirmed-badge">Confirmed</span></div><div class="day-desc">Via Abu Dhabi · Seat 20F + 32J · Ref: 9VD327</div></div></div>
+      <a class="day-card" href="https://maps.google.com/?q=34.6954318,135.5005214" style="text-decoration:none;color:inherit;display:flex;gap:12px;align-items:flex-start;"><div class="day-icon">🏨</div><div class="day-content"><div class="day-time">Check-in from 15:00 · Tap for map 📍</div><div class="day-title">Candeo Hotels Osaka The Tower</div><div class="day-desc">1-1-27 Dojimahama, Kita Ward · +81 6-6131-7714</div></div></a>
+      <a class="day-card" href="https://maps.google.com/?q=34.6611,135.5031" style="text-decoration:none;color:inherit;display:flex;gap:12px;align-items:flex-start;"><div class="day-icon">🥩</div><div class="day-content"><div class="day-time">19:30 · Tap for map 📍</div><div class="day-title">A5 Wagyu Yakiniku Osaka PANGA <span class="confirmed-badge">Confirmed</span></div><div class="day-desc">Halal · Party of 2</div></div></a>
+      <a class="day-card" href="https://maps.google.com/?q=34.6959814,135.4935612" style="text-decoration:none;color:inherit;display:flex;gap:12px;align-items:flex-start;"><div class="day-icon">🍸</div><div class="day-content"><div class="day-time">~21:30 · Tap for map 📍</div><div class="day-title">Bar Bota · 37F Four Seasons</div><div class="day-desc">Luxury cocktails & panoramic Osaka skyline</div></div></a>
+      <a class="day-card" href="https://maps.google.com/?q=34.6935117,135.49538049999998" style="text-decoration:none;color:inherit;display:flex;gap:12px;align-items:flex-start;"><div class="day-icon">🌃</div><div class="day-content"><div class="day-time">~23:00 · Tap for map 📍</div><div class="day-title">40 Sky Bar & Lounge · 40F Nakanoshima</div><div class="day-desc">Live music & nightcap to close the night</div></div></a>
+    </div>
+
+    <div class="day-block">
+      <div class="day-label c-osaka">30 May · Friday · Castle Day</div>
+      <a class="day-card" href="https://maps.google.com/?q=34.7031188,135.50261179999998" style="text-decoration:none;color:inherit;display:flex;gap:12px;align-items:flex-start;"><div class="day-icon">🥞</div><div class="day-content"><div class="day-time">Morning · Tap for map 📍</div><div class="day-title">The Happy Pancake</div><div class="day-desc">4-7 Doyamacho, Kita Ward · ~5 min from hotel</div></div></a>
+      <a class="day-card" href="https://maps.google.com/?q=34.6873,135.5259" style="text-decoration:none;color:inherit;display:flex;gap:12px;align-items:flex-start;"><div class="day-icon">🏯</div><div class="day-content"><div class="day-time">Late Morning · Tap for map 📍</div><div class="day-title">Osaka Castle</div><div class="day-desc">Tower, museum & park grounds · Free park entry</div></div></a>
+      <a class="day-card" href="https://maps.google.com/?q=34.6872,135.5258" style="text-decoration:none;color:inherit;display:flex;gap:12px;align-items:flex-start;"><div class="day-icon">🍺</div><div class="day-content"><div class="day-time">Afternoon · Tap for map 📍</div><div class="day-title">Blue Birds Rooftop Terrace</div><div class="day-desc">MIRAIZA OSAKA-JO Rooftop · Inside castle park</div></div></a>
+      <a class="day-card" href="https://maps.google.com/?q=34.668776699999995,135.500869" style="text-decoration:none;color:inherit;display:flex;gap:12px;align-items:flex-start;"><div class="day-icon">🍜</div><div class="day-content"><div class="day-time">~15:00 · Late Lunch · Tap for map 📍</div><div class="day-title">Halal Wagyu & Vegan Ramen Gyumon ⭐4.9</div><div class="day-desc">Dotonbori · Halal certified</div></div></a>
+      <a class="day-card" href="https://maps.google.com/?q=34.6687234,135.5012971" style="text-decoration:none;color:inherit;display:flex;gap:12px;align-items:flex-start;"><div class="day-icon">🌙</div><div class="day-content"><div class="day-time">Evening · Tap for map 📍</div><div class="day-title">Walking Namba & Dotonbori</div><div class="day-desc">Street food, neon lights & canal vibes</div></div></a>
+    </div>
+
+    <div class="day-block">
+      <div class="day-label c-kyoto">31 May · Saturday · Kyoto Day Trip</div>
+      <a class="day-card" href="https://maps.google.com/?q=34.6734358,135.49555429999998" style="text-decoration:none;color:inherit;display:flex;gap:12px;align-items:flex-start;"><div class="day-icon">🍳</div><div class="day-content"><div class="day-time">08:00–09:30 · Tap for map 📍</div><div class="day-title">maZe nishihorie ⭐4.8</div><div class="day-desc">Eggs Benedict · Kitahorie, Nishi Ward</div></div></a>
+      <a class="day-card" href="https://maps.google.com/?q=35.0141808,135.6775739" style="text-decoration:none;color:inherit;display:flex;gap:12px;align-items:flex-start;"><div class="day-icon">👘</div><div class="day-content"><div class="day-time">10:30 · Tap for map 📍</div><div class="day-title">Kyolan Kimono Rental & Sale ⭐5.0</div><div class="day-desc">Arashiyama · Dress + hair · Cash only · Opens 9:30 AM</div></div></a>
+      <a class="day-card" href="https://maps.google.com/?q=35.0168187,135.67130129999998" style="text-decoration:none;color:inherit;display:flex;gap:12px;align-items:flex-start;"><div class="day-icon">🌿</div><div class="day-content"><div class="day-time">11:00 · Tap for map 📍</div><div class="day-title">Arashiyama Bamboo Grove</div><div class="day-desc">Walk & photos in kimono · Free entry</div></div></a>
+      <a class="day-card" href="https://maps.google.com/?q=35.013542199999996,135.6764367" style="text-decoration:none;color:inherit;display:flex;gap:12px;align-items:flex-start;"><div class="day-icon">☕</div><div class="day-content"><div class="day-time">~11:45 · Tap for map 📍</div><div class="day-title">% ARABICA Kyoto Arashiyama</div><div class="day-desc">World-famous latte · ⚠️ Queue up to 50 min on weekends</div></div></a>
+      <a class="day-card" href="https://maps.google.com/?q=34.8951,135.5596" style="text-decoration:none;color:inherit;display:flex;gap:12px;align-items:flex-start;"><div class="day-icon">🥃</div><div class="day-content"><div class="day-time">14:00–17:00 · Tap for map 📍</div><div class="day-title">Yamazaki Whisky Museum <span class="pending-badge">Pending</span></div><div class="day-desc">$130.22 · 2 Adults · Ref: BR-1393566825</div></div></a>
+      <a class="day-card" href="https://maps.google.com/?q=34.6687234,135.5012971" style="text-decoration:none;color:inherit;display:flex;gap:12px;align-items:flex-start;"><div class="day-icon">🍽️</div><div class="day-content"><div class="day-time">19:00 · Tap for map 📍</div><div class="day-title">Chibo Okonomiyaki · Dotonbori</div><div class="day-desc">Chef cooks live on teppan · ⚠️ Book in advance</div></div></a>
+    </div>
+
+    <div class="day-block">
+      <div class="day-label c-osaka">1 June · Monday · USJ & Spa Day</div>
+      <a class="day-card" href="https://maps.google.com/?q=34.6656768,135.4323185" style="text-decoration:none;color:inherit;display:flex;gap:12px;align-items:flex-start;"><div class="day-icon">🍄</div><div class="day-content"><div class="day-time">10:50–11:50 · Tap for map 📍</div><div class="day-title">Super Nintendo World + Yoshi's Adventure <span class="confirmed-badge">Express Pass</span></div><div class="day-desc">Universal Express Pass 4 · 2 Persons</div></div></a>
+      <a class="day-card" href="https://maps.google.com/?q=34.6656768,135.4323185" style="text-decoration:none;color:inherit;display:flex;gap:12px;align-items:flex-start;"><div class="day-icon">🎢</div><div class="day-content"><div class="day-time">12:00–19:00 · Tap for map 📍</div><div class="day-title">USJ Free Roam</div><div class="day-desc">Harry Potter World, Hollywood rides & attractions</div></div></a>
+      <a class="day-card" href="https://maps.google.com/?q=34.6656768,135.4323185" style="text-decoration:none;color:inherit;display:flex;gap:12px;align-items:flex-start;"><div class="day-icon">👾</div><div class="day-content"><div class="day-time">19:20–19:50 · Tap for map 📍</div><div class="day-title">Villain-Con Minion Blast <span class="confirmed-badge">Express Pass</span></div><div class="day-desc">Illumination's · Express Pass 4 included</div></div></a>
+      <a class="day-card" href="https://maps.google.com/?q=34.668776699999995,135.500869" style="text-decoration:none;color:inherit;display:flex;gap:12px;align-items:flex-start;"><div class="day-icon">🍜</div><div class="day-content"><div class="day-time">19:30 · Dinner · Tap for map 📍</div><div class="day-title">Halal Wagyu Ramen Gyumon ⭐4.9 <span class="confirmed-badge">Confirmed</span></div><div class="day-desc">Dotonbori · Party of 2 · Ref: RAV447667</div></div></a>
+      <a class="day-card" href="https://maps.google.com/?q=34.7040357,135.5021224" style="text-decoration:none;color:inherit;display:flex;gap:12px;align-items:flex-start;"><div class="day-icon">💆</div><div class="day-content"><div class="day-time">~21:30 · Tap for map 📍</div><div class="day-title">MOUTON SPA ⭐4.6</div><div class="day-desc">Doyamacho · Couples massage · Open until 11:00 PM</div></div></a>
+    </div>
+
+    <div class="day-block">
+      <div class="day-label c-osaka">2 June · Tuesday · Checkout & Travel</div>
+      <a class="day-card" href="https://maps.google.com/?q=34.6954318,135.5005214" style="text-decoration:none;color:inherit;display:flex;gap:12px;align-items:flex-start;"><div class="day-icon">🏨</div><div class="day-content"><div class="day-time">11:00 · Checkout · Tap for map 📍</div><div class="day-title">Candeo Hotels Osaka The Tower</div><div class="day-desc">4 nights complete · Head to Fujikawaguchiko</div></div></a>
+      <div class="day-card"><div class="day-icon">🚌</div><div class="day-content"><div class="day-time">Travel day</div><div class="day-title">Osaka → Fujikawaguchiko</div><div class="day-desc">Shinkansen → Highway bus · ~4 hrs total</div></div></div>
+      <a class="day-card" href="https://maps.google.com/?q=35.5032609,138.77191879999998" style="text-decoration:none;color:inherit;display:flex;gap:12px;align-items:flex-start;"><div class="day-icon">♨️</div><div class="day-content"><div class="day-time">15:00 · Check-in · Tap for map 📍</div><div class="day-title">Rakuyu Ryokan</div><div class="day-desc">1182 Azagawa · Private & public onsen · Lake view rooms</div></div></a>
+    </div>
+  </div>
+</div>
+
+<!-- PAGE: ITINERARY -->
+<div class="page" id="page-itinerary">
+  <div class="page-header">
+    <div class="page-title">Itinerary</div>
+    <div class="page-sub">Day by day · All confirmed bookings</div>
+  </div>
+
+  <!-- OSAKA DAYS -->
+  <div class="section">
+    <div class="sec-title" style="color:var(--osaka);">Osaka · 29 May – 2 June</div>
+
+    <div class="day-block">
+      <div class="day-label c-osaka">29 May · Thursday · Arrival</div>
+      <div class="day-card"><div class="day-icon">✈️</div><div class="day-content"><div class="day-time">16:50 RUH → 11:50+1 KIX</div><div class="day-title">Etihad EY556 + EY814 <span class="confirmed-badge">Confirmed</span></div><div class="day-desc">Via Abu Dhabi · Seat 20F + 32J · Ref: 9VD327</div></div></div>
+      <div class="day-card"><div class="day-icon">🏨</div><div class="day-content"><div class="day-time">Check-in from 15:00</div><div class="day-title">Candeo Hotels Osaka The Tower</div><div class="day-desc">1-1-27 Dojimahama, Kita Ward · +81 6-6131-7714</div></div></div>
+      <div class="day-card"><div class="day-icon">🥩</div><div class="day-content"><div class="day-time">19:30</div><div class="day-title">A5 Wagyu Yakiniku Osaka PANGA <span class="confirmed-badge">Confirmed</span></div><div class="day-desc">Halal · Party of 2 · Osaka Halal restaurant</div></div></div>
+      <div class="day-card"><div class="day-icon">🍸</div><div class="day-content"><div class="day-time">~21:30</div><div class="day-title">Bar Bota</div><div class="day-desc">37F Four Seasons · Luxury cocktails & panoramic Osaka skyline</div></div></div>
+      <div class="day-card"><div class="day-icon">🌃</div><div class="day-content"><div class="day-time">~23:00</div><div class="day-title">40 Sky Bar & Lounge</div><div class="day-desc">40F Nakanoshima · Live music & nightcap to close the night</div></div></div>
+    </div>
+
+    <div class="day-block">
+      <div class="day-label c-osaka">30 May · Friday · Castle Day</div>
+      <div class="day-card"><div class="day-icon">🥞</div><div class="day-content"><div class="day-time">Morning</div><div class="day-title">The Happy Pancake</div><div class="day-desc">4-7 Doyamacho, Kita Ward · ~5 min from hotel</div></div></div>
+      <div class="day-card"><div class="day-icon">🏯</div><div class="day-content"><div class="day-time">Late Morning</div><div class="day-title">Osaka Castle</div><div class="day-desc">Tower, museum & park grounds · Free park entry</div></div></div>
+      <div class="day-card"><div class="day-icon">🍺</div><div class="day-content"><div class="day-time">Afternoon</div><div class="day-title">Blue Birds Rooftop Terrace</div><div class="day-desc">MIRAIZA OSAKA-JO Rooftop · Right inside castle park</div></div></div>
+      <div class="day-card"><div class="day-icon">🍜</div><div class="day-content"><div class="day-time">~15:00 · Late Lunch</div><div class="day-title">Halal Wagyu & Vegan Ramen Gyumon ⭐4.9</div><div class="day-desc">Dotonbori · Halal certified · Open until 11:30 PM</div></div></div>
+      <div class="day-card"><div class="day-icon">🌙</div><div class="day-content"><div class="day-time">Evening</div><div class="day-title">Walking Namba & Dotonbori</div><div class="day-desc">Street food, neon lights & canal vibes</div></div></div>
+    </div>
+
+    <div class="day-block">
+      <div class="day-label c-kyoto">31 May · Saturday · Kyoto Day Trip</div>
+      <div class="day-card"><div class="day-icon">🍳</div><div class="day-content"><div class="day-time">08:00–09:30</div><div class="day-title">maZe nishihorie ⭐4.8</div><div class="day-desc">Eggs Benedict & omelettes · Kitahorie, Nishi Ward · Opens 8:00 AM</div></div></div>
+      <div class="day-card"><div class="day-icon">🚃</div><div class="day-content"><div class="day-time">09:30</div><div class="day-title">Train: Osaka → Arashiyama</div><div class="day-desc">Via Hankyu line · ~50 min</div></div></div>
+      <div class="day-card"><div class="day-icon">👘</div><div class="day-content"><div class="day-time">10:30 · ~30 min</div><div class="day-title">Kyolan Kimono Rental & Sale ⭐5.0</div><div class="day-desc">3-56 Sagatenryuji Susukinobabacho · Dress + hair · Cash only · Opens 9:30 AM</div></div></div>
+      <div class="day-card"><div class="day-icon">🌿</div><div class="day-content"><div class="day-time">11:00</div><div class="day-title">Arashiyama Bamboo Grove</div><div class="day-desc">Walk & photos in kimono · Open 24 hours · Free entry</div></div></div>
+      <div class="day-card"><div class="day-icon">☕</div><div class="day-content"><div class="day-time">~11:45</div><div class="day-title">% ARABICA Kyoto Arashiyama ⭐4.2</div><div class="day-desc">World-famous latte · River & mountain views · ⚠️ Queue up to 50 min on weekends</div></div></div>
+      <div class="day-card"><div class="day-icon">🚃</div><div class="day-content"><div class="day-time">12:30</div><div class="day-title">Train: Arashiyama → Yamazaki</div><div class="day-desc">~25 min · Return kimono before leaving</div></div></div>
+      <div class="day-card"><div class="day-icon">🥃</div><div class="day-content"><div class="day-time">14:00–17:00</div><div class="day-title">Yamazaki Whisky Museum & Asahi Art Museum <span class="pending-badge">Pending</span></div><div class="day-desc">$130.22 · 2 Adults · $65.11 each · From Kyoto 14:00–17:00</div><div class="day-ref">Ref: BR-1393566825</div></div></div>
+      <div class="day-card"><div class="day-icon">🍽️</div><div class="day-content"><div class="day-time">19:00 · After returning to Osaka</div><div class="day-title">Chibo Okonomiyaki Restaurant</div><div class="day-desc">Dotonbori · Chef cooks live on teppan · ⚠️ Book in advance</div></div></div>
+    </div>
+
+    <div class="day-block">
+      <div class="day-label c-osaka">1 June · Monday · USJ & Spa Day</div>
+      <div class="day-card"><div class="day-icon">🍄</div><div class="day-content"><div class="day-time">10:50–11:50</div><div class="day-title">Super Nintendo World + Yoshi's Adventure <span class="confirmed-badge">Express Pass</span></div><div class="day-desc">Universal Express Pass 4 · Minion & Theater · 2 Persons</div></div></div>
+      <div class="day-card"><div class="day-icon">🎢</div><div class="day-content"><div class="day-time">12:00–19:00</div><div class="day-title">Universal Studios Japan · Free Roam</div><div class="day-desc">Harry Potter World, Hollywood rides & attractions</div></div></div>
+      <div class="day-card"><div class="day-icon">👾</div><div class="day-content"><div class="day-time">19:20–19:50</div><div class="day-title">Villain-Con Minion Blast <span class="confirmed-badge">Express Pass</span></div><div class="day-desc">Illumination's · Express Pass 4 included</div></div></div>
+      <div class="day-card"><div class="day-icon">🍜</div><div class="day-content"><div class="day-time">19:30 · Dinner <span class="confirmed-badge">Confirmed</span></div><div class="day-title">Halal Wagyu & Vegan Ramen Gyumon ⭐4.9</div><div class="day-desc">Dotonbori · Party of 2 · Mr Abdullah</div><div class="day-ref">Ref: RAV447667</div></div></div>
+      <div class="day-card"><div class="day-icon">💆</div><div class="day-content"><div class="day-time">~21:30</div><div class="day-title">MOUTON SPA ⭐4.6</div><div class="day-desc">Doyamacho, Kita Ward · Couples massage · Open until 11:00 PM</div></div></div>
+    </div>
+
+    <div class="day-block">
+      <div class="day-label c-osaka">2 June · Tuesday · Checkout & Travel</div>
+      <div class="day-card"><div class="day-icon">🏨</div><div class="day-content"><div class="day-time">11:00</div><div class="day-title">Checkout · Candeo Hotels Osaka The Tower</div><div class="day-desc">4 nights complete · Head to Fujikawaguchiko</div></div></div>
+      <div class="day-card"><div class="day-icon">🚌</div><div class="day-content"><div class="day-time">Travel day</div><div class="day-title">Osaka → Fujikawaguchiko</div><div class="day-desc">Shinkansen to Shinjuku → Highway bus to Kawaguchiko · ~4 hrs total</div></div></div>
+      <div class="day-card"><div class="day-icon">♨️</div><div class="day-content"><div class="day-time">15:00 · Check-in</div><div class="day-title">Rakuyu Ryokan · Fujikawaguchiko</div><div class="day-desc">1182 Azagawa · Private & public onsen · Lake view rooms</div></div></div>
+    </div>
+  </div>
+
+  <!-- FUJI DAYS -->
+  <div class="section" style="margin-top:8px;">
+    <div class="sec-title" style="color:var(--fuji);">Fujikawaguchiko · 2–4 June</div>
+
+    <div class="day-block">
+      <div class="day-label c-fuji">3 June · Wednesday · Fuji & Onsen</div>
+      <div class="day-card"><div class="day-icon">🗻</div><div class="day-content"><div class="day-time">Early morning · 5:00–7:00 AM</div><div class="day-title">Private Onsen · Mt. Fuji View</div><div class="day-desc">Best time for clear Fuji views · Soak in your private rotenburo</div></div></div>
+      <div class="day-card"><div class="day-icon">🌸</div><div class="day-content"><div class="day-time">Morning</div><div class="day-title">Oishi Park</div><div class="day-desc">Lakeside walk · Postcard-perfect Fuji reflections · Free entry · Retro Bus from station</div></div></div>
+      <div class="day-card"><div class="day-icon">🚡</div><div class="day-content"><div class="day-time">Afternoon · Opens 9:00 AM</div><div class="day-title">Kawaguchiko Tenjoyama Park Ropeway</div><div class="day-desc">Panoramic Fuji & lake views · ~10 min walk from station</div></div></div>
+      <div class="day-card"><div class="day-icon">🍱</div><div class="day-content"><div class="day-time">Evening</div><div class="day-title">Kaiseki Dinner · Rakuyu Ryokan</div><div class="day-desc">Traditional multi-course Japanese dinner · Included in stay</div></div></div>
+    </div>
+
+    <div class="day-block">
+      <div class="day-label c-fuji">4 June · Thursday · Checkout & Tokyo</div>
+      <div class="day-card"><div class="day-icon">🏨</div><div class="day-content"><div class="day-time">10:00</div><div class="day-title">Checkout · Rakuyu Ryokan</div><div class="day-desc">2 nights complete · Head to Tokyo</div></div></div>
+      <div class="day-card"><div class="day-icon">🚌</div><div class="day-content"><div class="day-time">Travel day</div><div class="day-title">Fujikawaguchiko → Tokyo</div><div class="day-desc">Highway bus Kawaguchiko → Shinjuku · ~2 hrs · Then metro to Shiodome</div></div></div>
+      <div class="day-card"><div class="day-icon">🏢</div><div class="day-content"><div class="day-time">15:00 · Check-in</div><div class="day-title">Shiba Park Hotel · Tokyo</div><div class="day-desc">1-5-10 Shibakoen, Minato City · Near Onarimon Station · +81 3-3433-4141</div></div></div>
+    </div>
+  </div>
+
+  <!-- TOKYO DAYS -->
+  <div class="section" style="margin-top:8px;">
+    <div class="sec-title" style="color:var(--tokyo);">Tokyo · 4–11 June</div>
+
+    <div class="day-block">
+      <div class="day-label c-tokyo">4 June · Thursday · Arrival Day</div>
+      <div class="day-card"><div class="day-icon">🚌</div><div class="day-content"><div class="day-time">Travel day</div><div class="day-title">Fujikawaguchiko → Tokyo</div><div class="day-desc">Highway bus Kawaguchiko → Shinjuku · ~1h 45min · Then metro to Onarimon</div></div></div>
+      <div class="day-card"><div class="day-icon">🏨</div><div class="day-content"><div class="day-time">15:00 · Check-in</div><div class="day-title">Shiba Park Hotel</div><div class="day-desc">1-5-10 Shibakoen, Minato City · ~5 min walk from Onarimon Station · +81 3-3433-4141</div></div></div>
+      <a class="day-card" href="https://maps.google.com/?q=35.6585805,139.7454329" style="text-decoration:none;color:inherit;display:flex;gap:12px;align-items:flex-start;"><div class="day-icon">🗼</div><div class="day-content"><div class="day-time">~17:30 · Tap for map 📍</div><div class="day-title">Tokyo Tower</div><div class="day-desc">5 min walk from hotel · Open until 11 PM · ¥1,200 per person · No booking needed</div></div></a>
+      <a class="day-card" href="https://maps.google.com/?q=35.6516776,139.75108609999998" style="text-decoration:none;color:inherit;display:flex;gap:12px;align-items:flex-start;"><div class="day-icon">🍛</div><div class="day-content"><div class="day-time">~19:00 · Tap for map 📍</div><div class="day-title">CoCo Ichibanya</div><div class="day-desc">1-27-10 Hamamatsucho · ~8 min walk from hotel · Japanese curry</div></div></a>
+      <a class="day-card" href="https://maps.google.com/?q=35.6554822,139.747183" style="text-decoration:none;color:inherit;display:flex;gap:12px;align-items:flex-start;"><div class="day-icon">🍸</div><div class="day-content"><div class="day-time">~21:00 · Tap for map 📍</div><div class="day-title">Sky Bar Stellar Garden</div><div class="day-desc">33F Prince Park Tower · Open until 1:00 AM · Direct Tokyo Tower view · Book window seats</div></div></a>
+    </div>
+
+    <div class="day-block">
+      <div class="day-label c-tokyo">5 June · Friday · Free Day 🗓️</div>
+      <div class="day-card"><div class="day-icon">📝</div><div class="day-content"><div class="day-time">To be planned</div><div class="day-title">Your choice</div><div class="day-desc">Day not yet planned · Add your activities here</div></div></div>
+    </div>
+
+    <div class="day-block">
+      <div class="day-label c-tokyo">6 June · Saturday · Shibuya & Go Kart Day</div>
+      <a class="day-card" href="https://maps.google.com/?q=35.6586719,139.7019848" style="text-decoration:none;color:inherit;display:flex;gap:12px;align-items:flex-start;"><div class="day-icon">🌆</div><div class="day-content"><div class="day-time">18:00 · Sunset slot · Tap for map 📍</div><div class="day-title">Shibuya Sky ⭐</div><div class="day-desc">229m open rooftop · Sunset ~18:55 · Book via shibuyasky.jp or KKday · ¥3,700 · Sells out fast!</div></div></a>
+      <div class="day-card"><div class="day-icon">🚗</div><div class="day-content"><div class="day-time">19:30 · Arrive 1 hr before ⚠️</div><div class="day-title">Akiba Kart Shinjuku · Get Suited Up</div><div class="day-desc">Shinjuku shop · Get dressed in costume · Ready for race</div></div></div>
+      <a class="day-card" href="https://maps.google.com/?q=35.691919,139.706456" style="text-decoration:none;color:inherit;display:flex;gap:12px;align-items:flex-start;"><div class="day-icon">🏎️</div><div class="day-content"><div class="day-time">20:30 · Tap for map 📍</div><div class="day-title">Go Karting · Akiba Kart Shibuya <span class="confirmed-badge">Confirmed</span></div><div class="day-desc">1-hour experience · 2 Adults · $194.10 · Race through Tokyo streets in costume!</div></div></a>
+      <div class="day-card"><div class="day-icon">🌙</div><div class="day-content"><div class="day-time">~22:00</div><div class="day-title">Dinner · Shinjuku area</div><div class="day-desc">Late dinner after the race · Golden Gai or Omoide Yokocho for atmosphere</div></div></div>
+    </div>
+
+    <div class="day-block">
+      <div class="day-label c-tokyo">7 June · Sunday · Free Day 🗓️</div>
+      <div class="day-card"><div class="day-icon">📝</div><div class="day-content"><div class="day-time">To be planned</div><div class="day-title">Your choice</div><div class="day-desc">Day not yet planned · Add your activities here</div></div></div>
+    </div>
+
+    <div class="day-block">
+      <div class="day-label c-tokyo">8 June · Monday · Tokyo Disneyland 🎢</div>
+      <a class="day-card" href="https://maps.google.com/?q=35.6329,139.8804" style="text-decoration:none;color:inherit;display:flex;gap:12px;align-items:flex-start;"><div class="day-icon">🏰</div><div class="day-content"><div class="day-time">Full day · Tap for map 📍</div><div class="day-title">Tokyo Disneyland <span class="confirmed-badge">Confirmed</span></div><div class="day-desc">1-Day Passport · 2 Adults · $125.98 · From Onarimon → Maihama Station (JR Keiyo line) · ~35 min</div></div></a>
+    </div>
+
+    <div class="day-block">
+      <div class="day-label c-tokyo">9 June · Tuesday · Free Day 🗓️</div>
+      <div class="day-card"><div class="day-icon">📝</div><div class="day-content"><div class="day-time">To be planned</div><div class="day-title">Your choice</div><div class="day-desc">Day not yet planned · Add your activities here</div></div></div>
+    </div>
+
+    <div class="day-block">
+      <div class="day-label c-tokyo">10 June · Wednesday · Free Day 🗓️</div>
+      <div class="day-card"><div class="day-icon">📝</div><div class="day-content"><div class="day-time">To be planned</div><div class="day-title">Your choice</div><div class="day-desc">Day not yet planned · Add your activities here</div></div></div>
+    </div>
+
+    <div class="day-block">
+      <div class="day-card"><div class="day-icon">🎮</div><div class="day-content"><div class="day-time">Day 6 suggestion</div><div class="day-title">Akihabara + Tsukiji outer market</div><div class="day-desc">Electronics, anime & breakfast sushi · From Onarimon ~20 min</div></div></div>
+    </div>
+    <div class="day-block">
+      <div class="day-label c-tokyo">11 June · Thursday · Departure</div>
+      <div class="day-card"><div class="day-icon">🏨</div><div class="day-content"><div class="day-time">11:00</div><div class="day-title">Checkout · Shiba Park Hotel</div><div class="day-desc">7 nights complete · Head to Narita Airport</div></div></div>
+      <div class="day-card"><div class="day-icon">✈️</div><div class="day-content"><div class="day-time">18:15 NRT → 02:45+1 RUH</div><div class="day-title">Etihad EY801 + EY551 <span class="confirmed-badge">Confirmed</span></div><div class="day-desc">Via Abu Dhabi · Seat 22K + 30F · Ref: 9VD327</div></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- PAGE: BOOKINGS -->
+<div class="page" id="page-bookings">
+  <div class="page-header">
+    <div class="page-title">Bookings</div>
+    <div class="page-sub">Hotels, tickets & reservations</div>
+  </div>
+
+  <div class="section">
+    <div class="sec-title">Hotels</div>
+
+    <div class="bcard">
+      <div class="bcard-header">
+        <div class="bcard-icon icon-osaka">🏨</div>
+        <div class="bcard-meta"><div class="bcard-type c-osaka">Hotel · Osaka</div><div class="bcard-name">Candeo Hotels Osaka The Tower</div><div class="bcard-sub">1-1-27 Dojimahama, Kita Ward · ⭐4.1</div></div>
+        <div class="bcard-status s-confirmed">Confirmed</div>
+      </div>
+      <div class="bcard-div"></div>
+      <div class="bcard-rows">
+        <div class="bcard-row"><span class="brl">Check-in</span><span class="brv">29 May 2026 · 15:00</span></div>
+        <div class="bcard-row"><span class="brl">Check-out</span><span class="brv">2 June 2026 · 11:00</span></div>
+        <div class="bcard-row"><span class="brl">Duration</span><span class="brv">4 nights</span></div>
+        <div class="bcard-row"><span class="brl">Highlights</span><span class="brv">37F infinity pool & sky spa</span></div>
+        <div class="bcard-row"><span class="brl">Phone</span><span class="brv">+81 6-6131-7714</span></div>
+      </div>
+      <div class="bcard-footer">
+        <a class="bcard-btn btn-primary btn-osaka" href="https://maps.google.com/?q=34.6954318,135.5005214">Map</a>
+        <button class="bcard-btn btn-secondary" onclick="window.location.href='tel:+81661317714'">Call Hotel</button>
+      </div>
+    </div>
+
+    <div class="bcard">
+      <div class="bcard-header">
+        <div class="bcard-icon icon-fuji">♨️</div>
+        <div class="bcard-meta"><div class="bcard-type c-fuji">Ryokan · Fujikawaguchiko</div><div class="bcard-name">Rakuyu Ryokan</div><div class="bcard-sub">1182 Azagawa, Fujikawaguchiko · ⭐4.6</div></div>
+        <div class="bcard-status s-confirmed">Confirmed</div>
+      </div>
+      <div class="bcard-div"></div>
+      <div class="bcard-rows">
+        <div class="bcard-row"><span class="brl">Check-in</span><span class="brv">2 June 2026 · 15:00</span></div>
+        <div class="bcard-row"><span class="brl">Check-out</span><span class="brv">4 June 2026 · 10:00</span></div>
+        <div class="bcard-row"><span class="brl">Duration</span><span class="brv">2 nights</span></div>
+        <div class="bcard-row"><span class="brl">Onsen</span><span class="brv">Private & public available</span></div>
+        <div class="bcard-row"><span class="brl">Meals</span><span class="brv">Breakfast + dinner included</span></div>
+        <div class="bcard-row"><span class="brl">Phone</span><span class="brv">+81 555-72-1066</span></div>
+      </div>
+      <div class="bcard-footer">
+        <a class="bcard-btn btn-primary btn-fuji" href="https://maps.google.com/?q=35.5032609,138.77191879999998">Map</a>
+        <button class="bcard-btn btn-secondary" onclick="window.location.href='tel:+81555721066'">Call Ryokan</button>
+      </div>
+    </div>
+
+    <div class="bcard">
+      <div class="bcard-header">
+        <div class="bcard-icon icon-tokyo">🏢</div>
+        <div class="bcard-meta"><div class="bcard-type c-tokyo">Hotel · Tokyo</div><div class="bcard-name">Shiba Park Hotel</div><div class="bcard-sub">1-5-10 Shibakoen, Minato City · ⭐4.3</div></div>
+        <div class="bcard-status s-confirmed">Confirmed</div>
+      </div>
+      <div class="bcard-div"></div>
+      <div class="bcard-rows">
+        <div class="bcard-row"><span class="brl">Check-in</span><span class="brv">4 June 2026 · 15:00</span></div>
+        <div class="bcard-row"><span class="brl">Check-out</span><span class="brv">11 June 2026 · 11:00</span></div>
+        <div class="bcard-row"><span class="brl">Duration</span><span class="brv">7 nights</span></div>
+        <div class="bcard-row"><span class="brl">Location</span><span class="brv">5 min walk to Onarimon Stn</span></div>
+        <div class="bcard-row"><span class="brl">Phone</span><span class="brv">+81 3-3433-4141</span></div>
+      </div>
+      <div class="bcard-footer">
+        <a class="bcard-btn btn-primary btn-tokyo" href="https://maps.google.com/?q=35.6586589,139.75203539999998">Map</a>
+        <button class="bcard-btn btn-secondary" onclick="window.location.href='tel:+81334334141'">Call Hotel</button>
+      </div>
+    </div>
+
+    <div class="sec-title" style="margin-top:8px;">Tickets & Activities</div>
+    <div class="gps-card">
+      <div class="gps-item">
+        <div class="gps-num num-osaka">✓</div>
+        <div class="gps-info"><div class="gps-name">USJ Express Pass 4 · Minion & Theater</div><div class="gps-detail">1 June 2026 · 2 Persons · Super Nintendo World 10:50 · Minion Blast 19:20</div></div>
+      </div>
+      <div class="gps-item">
+        <div class="gps-num num-kyoto">⏳</div>
+        <div class="gps-info"><div class="gps-name">Yamazaki Whisky Museum & Asahi Art Museum</div><div class="gps-detail">31 May 2026 · 14:00–17:00 · $130.22 · Ref: BR-1393566825</div></div>
+      </div>
+      <div class="gps-item">
+        <div class="gps-num num-osaka">✓</div>
+        <div class="gps-info"><div class="gps-name">Halal Wagyu Ramen Gyumon · Dinner</div><div class="gps-detail">1 June 2026 · 19:30 · Party of 2 · Ref: RAV447667</div></div>
+      </div>
+      <div class="gps-item">
+        <div class="gps-num num-osaka">✓</div>
+        <div class="gps-info"><div class="gps-name">A5 Wagyu Yakiniku Osaka PANGA</div><div class="gps-detail">29 May 2026 · 19:30 · Party of 2 · Halal · Confirmed</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PAGE: GPS -->
+<div class="page" id="page-cities">
+  <div class="page-header">
+    <div class="page-title">GPS & Transport</div>
+    <div class="page-sub">Live directions · Tap transit or Uber to navigate</div>
+  </div>
+  <div class="city-scroll">
+    <div class="city-tab active" data-city="osaka" onclick="switchCity('osaka')">Osaka</div>
+    <div class="city-tab" data-city="kyoto" onclick="switchCity('kyoto')">Kyoto</div>
+    <div class="city-tab" data-city="fuji" onclick="switchCity('fuji')">Fujikawaguchiko</div>
+    <div class="city-tab" data-city="tokyo" onclick="switchCity('tokyo')">Tokyo</div>
+  </div>
+
+  <div class="city-panel active" id="cpanel-osaka">
+    <div class="start-banner bg-osaka" style="border-color:var(--osaka-mid);margin-top:12px;">
+      <div class="sdot" style="background:var(--osaka);"></div>
+      <div class="sinfo"><div class="slabel c-osaka">Your base · Osaka</div><div class="sstation">Candeo Hotels Osaka The Tower · Dojimahama</div></div>
+    </div>
+
+    <div id="osaka-destinations" style="padding:0 0 8px;"></div>
+  </div>
+
+  <div class="city-panel" id="cpanel-kyoto">
+    <div class="start-banner bg-kyoto" style="border-color:var(--kyoto-mid);margin-top:12px;">
+      <div class="sdot" style="background:var(--kyoto);"></div>
+      <div class="sinfo"><div class="slabel c-kyoto">Starting from · 31 May</div><div class="sstation">Yodoyabashi Station → Hankyu → Arashiyama</div></div>
+    </div>
+    <div id="kyoto-destinations" style="padding:0 0 8px;"></div>
+  </div>
+
+  <div class="city-panel" id="cpanel-fuji">
+    <div class="start-banner bg-fuji" style="border-color:var(--fuji-mid);margin-top:12px;">
+      <div class="sdot" style="background:var(--fuji);"></div>
+      <div class="sinfo"><div class="slabel c-fuji">Arrival hub</div><div class="sstation">Kawaguchiko Station · Bus / Taxi area</div></div>
+    </div>
+    <div id="fuji-destinations" style="padding:0 0 8px;"></div>
+  </div>
+
+  <div class="city-panel" id="cpanel-tokyo">
+    <div class="start-banner bg-tokyo" style="border-color:var(--tokyo-mid);margin-top:12px;">
+      <div class="sdot" style="background:var(--tokyo);"></div>
+      <div class="sinfo"><div class="slabel c-tokyo">Your base · Tokyo</div><div class="sstation">Shiba Park Hotel · Onarimon Station</div></div>
+    </div>
+    <div id="tokyo-destinations" style="padding:0 0 8px;"></div>
+  </div>
+</div>
+
+<!-- PAGE: JOURNAL -->
+<div class="page" id="page-checklist">
+  <div class="page-header">
+    <div class="page-title">Trip journal</div>
+    <div class="page-sub" id="check-progress">0 / 27 done · Tap to check off as you go!</div>
+  </div>
+  <div class="section">
+    <div class="sec-title" style="color:var(--osaka);">29 May · Arrival Day</div>
+    <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><div class="check-text">✈️ Departed RUH on EY556 · 16:50</div></div>
+    <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><div class="check-text">✈️ Connected AUH → KIX on EY814 · 21:10</div></div>
+    <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><div class="check-text">🏨 Checked in · Candeo Hotels Osaka The Tower</div></div>
+    <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><div class="check-text">🥩 Dinner · A5 Wagyu Yakiniku Osaka PANGA · 19:30</div></div>
+    <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><div class="check-text">🍸 Bar Bota · 37F Four Seasons · Cocktails & skyline</div></div>
+    <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><div class="check-text">🌃 40 Sky Bar & Lounge · Nakanoshima · Live music</div></div>
+
+    <div class="sec-title" style="color:var(--osaka);margin-top:14px;">30 May · Castle Day</div>
+    <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><div class="check-text">🥞 Breakfast · The Happy Pancake · Doyamacho</div></div>
+    <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><div class="check-text">🏯 Osaka Castle · Tower & museum</div></div>
+    <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><div class="check-text">🍺 Blue Birds Rooftop Terrace · MIRAIZA OSAKA-JO</div></div>
+    <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><div class="check-text">🍜 Late lunch · Halal Wagyu Ramen Gyumon · Dotonbori</div></div>
+    <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><div class="check-text">🌙 Evening walk · Namba & Dotonbori</div></div>
+
+    <div class="sec-title" style="color:var(--kyoto);margin-top:14px;">31 May · Kyoto Day Trip</div>
+    <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><div class="check-text">🍳 Breakfast · maZe nishihorie · Eggs Benedict</div></div>
+    <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><div class="check-text">👘 Kimono · Kyolan Kimono Rental · Arashiyama (cash!)</div></div>
+    <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><div class="check-text">🌿 Arashiyama Bamboo Grove · Photos in kimono</div></div>
+    <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><div class="check-text">☕ % ARABICA Kyoto Arashiyama · Famous latte</div></div>
+    <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><div class="check-text">🥃 Yamazaki Whisky Museum · 14:00 · Ref: BR-1393566825</div></div>
+    <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><div class="check-text">🍽️ Dinner · Chibo Okonomiyaki · Dotonbori</div></div>
+
+    <div class="sec-title" style="color:var(--osaka);margin-top:14px;">1 June · USJ & Spa Day</div>
+    <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><div class="check-text">🍄 Super Nintendo World + Yoshi's Adventure · 10:50</div></div>
+    <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><div class="check-text">🎢 USJ free roam · Harry Potter World & rides</div></div>
+    <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><div class="check-text">👾 Villain-Con Minion Blast · 19:20</div></div>
+    <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><div class="check-text">🍜 Dinner · Halal Wagyu Ramen Gyumon · 19:30 · Ref: RAV447667</div></div>
+    <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><div class="check-text">💆 MOUTON SPA · Couples massage · ~21:30</div></div>
+
+    <div class="sec-title" style="color:var(--fuji);margin-top:14px;">2–4 June · Fujikawaguchiko</div>
+    <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><div class="check-text">🚌 Travel Osaka → Fujikawaguchiko · Shinkansen + bus</div></div>
+    <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><div class="check-text">♨️ Check in · Rakuyu Ryokan · Private onsen</div></div>
+    <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><div class="check-text">🍸 Oar Blue · Pre-dinner drinks · Matcha cocktail</div></div>
+    <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><div class="check-text">🍽️ IDATEN BETTEI · Halal dinner · 19:00 · Confirmed</div></div>
+    <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><div class="check-text">🎹 New York Bar · Jazz cocktails · Close the night</div></div>
+    <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><div class="check-text">🗻 Early morning private onsen · 05:30 · Fuji view</div></div>
+    <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><div class="check-text">🌸 Oishi Park · Lake Kawaguchi · Fuji reflections</div></div>
+    <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><div class="check-text">🚡 Tenjoyama Park Ropeway · Panoramic Fuji views</div></div>
+
+    <div class="sec-title" style="color:var(--tokyo);margin-top:14px;">4 June · Arrival Tokyo</div>
+    <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><div class="check-text">🚌 Highway bus Kawaguchiko → Shinjuku</div></div>
+    <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><div class="check-text">🏨 Checked in · Shiba Park Hotel · Tokyo</div></div>
+    <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><div class="check-text">🗼 Tokyo Tower · Sunset views · 5 min walk</div></div>
+    <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><div class="check-text">🍛 Dinner · CoCo Ichibanya · Hamamatsucho</div></div>
+    <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><div class="check-text">🍸 Sky Bar Stellar Garden · 33F · Tokyo Tower view</div></div>
+
+    <div class="sec-title" style="color:var(--tokyo);margin-top:14px;">6 June · Shibuya & Go Kart Day</div>
+    <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><div class="check-text">🌆 Shibuya Sky · 18:00 · Sunset slot · 229m rooftop</div></div>
+    <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><div class="check-text">🏎️ Go Karting · Akiba Kart Shinjuku · 20:30 · Arrive 19:30</div></div>
+    <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><div class="check-text">🌙 Late dinner · Shinjuku area</div></div>
+
+    <div class="sec-title" style="color:var(--tokyo);margin-top:14px;">8 June · Disneyland Day</div>
+    <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><div class="check-text">🏰 Tokyo Disneyland · Full day · 1-Day Passport · 2 Adults</div></div>
+
+    <div class="sec-title" style="color:var(--tokyo);margin-top:14px;">11 June · Departure</div>
+    <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><div class="check-text">🏨 Checkout · Shiba Park Hotel · 11:00</div></div>
+    <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><div class="check-text">✈️ EY801 NRT → AUH · 18:15 · Seat 22K</div></div>
+    <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><div class="check-text">✈️ EY551 AUH → RUH · 02:00+1 · Seat 30F · Home! 🏠</div></div>
+  </div>
+</div>
+
+<!-- BOTTOM NAV -->
+<div class="bottom-nav">
+  <button class="nav-item active" id="nav-home" onclick="showPage('home')"><div class="nav-icon">✈</div><div class="nav-label">Overview</div></button>
+  <button class="nav-item" id="nav-itinerary" onclick="showPage('itinerary')"><div class="nav-icon">📅</div><div class="nav-label">Itinerary</div></button>
+  <button class="nav-item" id="nav-bookings" onclick="showPage('bookings')"><div class="nav-icon">🎫</div><div class="nav-label">Bookings</div></button>
+  <button class="nav-item" id="nav-cities" onclick="showPage('cities')"><div class="nav-icon">📍</div><div class="nav-label">GPS</div></button>
+  <button class="nav-item" id="nav-checklist" onclick="showPage('checklist')"><div class="nav-icon">📖</div><div class="nav-label">Journal</div></button>
+</div>
+
+<script>
+const dep = new Date('2026-05-28T16:50:00+03:00');
+
+const HOTEL_OSAKA = {lat:34.6954318, lng:135.5005214};
+const HOTEL_TOKYO = {lat:35.6586589, lng:139.75203539999998};
+const KAWAGUCHIKO = {lat:35.4982, lng:138.7688};
+
+function mapsDir(fromLat, fromLng, toLat, toLng) {
+  return `https://www.google.com/maps/dir/?api=1&origin=${fromLat},${fromLng}&destination=${toLat},${toLng}&travelmode=transit`;
+}
+function mapsPin(lat, lng) {
+  return `https://maps.google.com/?q=${lat},${lng}`;
+}
+function uberDeep(toLat, toLng) {
+  return `https://m.uber.com/ul/?action=setPickup&pickup=my_location&dropoff[latitude]=${toLat}&dropoff[longitude]=${toLng}`;
+}
+
+function buildCard(d, color, numClass) {
+  const transitUrl = mapsDir(d.fromLat, d.fromLng, d.lat, d.lng);
+  const pinUrl = mapsPin(d.lat, d.lng);
+  const uberUrl = uberDeep(d.lat, d.lng);
+  const tags = d.tags.map(t => `<span class="dtag dtag-${t.type}">${t.label}</span>`).join('');
+  return `
+  <div class="dest-card">
+    <div class="dest-header">
+      <div class="dest-num ${numClass}">${d.num}</div>
+      <div class="dest-info">
+        <div class="dest-name">${d.name}</div>
+        <div class="dest-when">${d.when}</div>
+      </div>
+    </div>
+    <div class="dest-tags">${tags}</div>
+    <div class="dest-btns">
+      <a class="dest-btn dest-btn-transit" href="${transitUrl}">🚇 Transit directions</a>
+      <a class="dest-btn dest-btn-maps" href="${pinUrl}">📍 Pin</a>
+      <a class="dest-btn dest-btn-uber" href="${uberUrl}">🚗 Uber</a>
+    </div>
+  </div>`;
+}
+
+const osakaData = [
+  { num:'🏨', name:'A5 Wagyu Yakiniku Osaka PANGA', when:'29 May · 19:30 · Dinner · Confirmed', lat:34.6611, lng:135.5031, fromLat:HOTEL_OSAKA.lat, fromLng:HOTEL_OSAKA.lng, tags:[{type:'walk',label:'~12 min walk'},{type:'uber',label:'Uber ~¥800 · SAR 20'}] },
+  { num:'🍸', name:'Bar Bota · Four Seasons 37F', when:'29 May · ~21:30 · Luxury cocktails', lat:34.6959814, lng:135.4935612, fromLat:HOTEL_OSAKA.lat, fromLng:HOTEL_OSAKA.lng, tags:[{type:'walk',label:'~8 min walk'},{type:'uber',label:'Uber ~¥700 · SAR 18'}] },
+  { num:'🌃', name:'40 Sky Bar & Lounge', when:'29 May · ~23:00 · Nakanoshima · Live music', lat:34.6935117, lng:135.49538049999998, fromLat:HOTEL_OSAKA.lat, fromLng:HOTEL_OSAKA.lng, tags:[{type:'walk',label:'~10 min walk'},{type:'uber',label:'Uber ~¥750 · SAR 19'}] },
+  { num:'🥞', name:'The Happy Pancake', when:'30 May · Morning · Breakfast', lat:34.7031188, lng:135.50261179999998, fromLat:HOTEL_OSAKA.lat, fromLng:HOTEL_OSAKA.lng, tags:[{type:'walk',label:'~5 min walk'},{type:'uber',label:'Uber ~¥600 · SAR 15'}] },
+  { num:'🏯', name:'Osaka Castle', when:'30 May · Late morning · Sightseeing', lat:34.6873, lng:135.5259, fromLat:HOTEL_OSAKA.lat, fromLng:HOTEL_OSAKA.lng, tags:[{type:'metro',label:'Tanimachi line ~18 min · ¥240'},{type:'uber',label:'Uber ~¥1,200 · SAR 30'}] },
+  { num:'🍺', name:'Blue Birds Rooftop Terrace', when:'30 May · Afternoon · MIRAIZA OSAKA-JO', lat:34.6872, lng:135.5258, fromLat:HOTEL_OSAKA.lat, fromLng:HOTEL_OSAKA.lng, tags:[{type:'metro',label:'Tanimachi line ~18 min · ¥240'},{type:'uber',label:'Uber ~¥1,200 · SAR 30'}] },
+  { num:'🍜', name:'Halal Wagyu Ramen Gyumon', when:'30 May · ~15:00 · Late lunch · Dotonbori', lat:34.668776699999995, lng:135.500869, fromLat:HOTEL_OSAKA.lat, fromLng:HOTEL_OSAKA.lng, tags:[{type:'metro',label:'Midosuji line ~10 min · ¥230'},{type:'uber',label:'Uber ~¥900 · SAR 22'}] },
+  { num:'🌙', name:'Namba & Dotonbori Walk', when:'30 May · Evening · Street food & neon lights', lat:34.6687234, lng:135.5012971, fromLat:HOTEL_OSAKA.lat, fromLng:HOTEL_OSAKA.lng, tags:[{type:'metro',label:'Midosuji line ~10 min · ¥230'},{type:'uber',label:'Uber ~¥900 · SAR 22'}] },
+  { num:'🎢', name:'Universal Studios Japan', when:'1 Jun · 10:50–19:50 · Express Pass', lat:34.6656768, lng:135.4323185, fromLat:HOTEL_OSAKA.lat, fromLng:HOTEL_OSAKA.lng, tags:[{type:'metro',label:'JR Sakurajima line ~30 min · ¥290'},{type:'uber',label:'Uber ~¥2,500 · SAR 62'}] },
+  { num:'🍜', name:'Halal Wagyu Ramen Gyumon · Dinner', when:'1 Jun · 19:30 · Confirmed · Ref: RAV447667', lat:34.668776699999995, lng:135.500869, fromLat:34.6656768, fromLng:135.4323185, tags:[{type:'metro',label:'From USJ → Namba ~20 min · ¥300'},{type:'uber',label:'Uber ~¥1,500 · SAR 37'}] },
+  { num:'💆', name:'MOUTON SPA', when:'1 Jun · ~21:30 · Couples massage', lat:34.7040357, lng:135.5021224, fromLat:34.668776699999995, fromLng:135.500869, tags:[{type:'walk',label:'~18 min walk from Gyumon'},{type:'uber',label:'Uber ~¥800 · SAR 20'}] },
+];
+
+const kyotoData = [
+  { num:'🍳', name:'maZe nishihorie', when:'31 May · 08:00 · Breakfast · Eggs Benedict', lat:34.6734358, lng:135.49555429999998, fromLat:HOTEL_OSAKA.lat, fromLng:HOTEL_OSAKA.lng, tags:[{type:'walk',label:'~15 min walk from hotel'},{type:'uber',label:'Uber ~¥1,000 · SAR 25'}] },
+  { num:'👘', name:'Kyolan Kimono Rental & Sale', when:'31 May · 10:30 · Arashiyama · Cash only!', lat:35.0141808, lng:135.6775739, fromLat:34.6734358, fromLng:135.49555429999998, tags:[{type:'metro',label:'From maZe: Hankyu → Arashiyama ~50 min · ¥500'},{type:'uber',label:'Uber not recommended (far)'}] },
+  { num:'🌿', name:'Arashiyama Bamboo Grove', when:'31 May · 11:00 · Walk in kimono · Free', lat:35.0168187, lng:135.67130129999998, fromLat:35.0141808, fromLng:135.6775739, tags:[{type:'walk',label:'~5 min walk from kimono shop'},{type:'uber',label:'Uber ~¥600 · SAR 15'}] },
+  { num:'☕', name:'% ARABICA Kyoto Arashiyama', when:'31 May · ~11:45 · Famous latte · ⚠️ Queue', lat:35.013542199999996, lng:135.6764367, fromLat:35.0168187, fromLng:135.67130129999998, tags:[{type:'walk',label:'~3 min walk from bamboo grove'},{type:'uber',label:'Uber ~¥500 · SAR 12'}] },
+  { num:'🥃', name:'Yamazaki Whisky Museum', when:'31 May · 14:00–17:00 · Ref: BR-1393566825', lat:34.8951, lng:135.5596, fromLat:35.013542199999996, fromLng:135.6764367, tags:[{type:'metro',label:'From Arashiyama: Hankyu → JR → Yamazaki ~35 min'},{type:'uber',label:'Uber ~¥3,500 · SAR 87'}] },
+  { num:'🍽️', name:'Chibo Okonomiyaki · Dotonbori', when:'31 May · 19:00 · Book ahead!', lat:34.6687234, lng:135.5012971, fromLat:34.8951, fromLng:135.5596, tags:[{type:'metro',label:'From Yamazaki: JR → Osaka Namba ~35 min'},{type:'uber',label:'Uber ~¥4,000 · SAR 100'}] },
+];
+
+const fujiData = [
+  { num:'🏨', name:'Rakuyu Ryokan', when:'2 Jun · 15:00 · Check-in · Private onsen', lat:35.5032609, lng:138.77191879999998, fromLat:KAWAGUCHIKO.lat, fromLng:KAWAGUCHIKO.lng, tags:[{type:'taxi',label:'Taxi from station ~8 min · ¥1,000'},{type:'uber',label:'No Uber · Taxi only'}] },
+  { num:'🌸', name:'Oishi Park', when:'3 Jun · Morning · Fuji lake reflections · Free', lat:35.522904, lng:138.74575220000003, fromLat:35.5032609, fromLng:138.77191879999998, tags:[{type:'bus',label:'Retro Bus (Lakeside line) ~20 min · ¥500'},{type:'taxi',label:'Taxi ~¥2,500 · SAR 62'}] },
+  { num:'🚡', name:'Kawaguchiko Tenjoyama Park Ropeway', when:'3 Jun · Afternoon · Panoramic Fuji views', lat:35.5035761, lng:138.7770002, fromLat:35.522904, fromLng:138.74575220000003, tags:[{type:'bus',label:'Retro Bus back ~20 min · ¥500'},{type:'taxi',label:'Taxi ~¥2,000 · SAR 50'}] },
+];
+
+const tokyoData = [
+  { num:'⛩️', name:'Senso-ji Temple · Asakusa', when:'Tokyo stay · Nakamise Street', lat:35.7147651, lng:139.7966553, fromLat:HOTEL_TOKYO.lat, fromLng:HOTEL_TOKYO.lng, tags:[{type:'metro',label:'Mita → Asakusa line ~25 min · ¥210'},{type:'uber',label:'Uber ~¥2,200 · SAR 55'}] },
+  { num:'🌿', name:'Meiji Jingu Shrine', when:'Tokyo stay · Forest shrine · Harajuku area', lat:35.6763976, lng:139.6993259, fromLat:HOTEL_TOKYO.lat, fromLng:HOTEL_TOKYO.lng, tags:[{type:'metro',label:'Hibiya → Harajuku ~30 min · ¥210'},{type:'uber',label:'Uber ~¥1,800 · SAR 45'}] },
+  { num:'🌆', name:'Shibuya Sky Observatory', when:'Tokyo stay · Book sunset slot in advance', lat:35.6586719, lng:139.7019848, fromLat:HOTEL_TOKYO.lat, fromLng:HOTEL_TOKYO.lng, tags:[{type:'metro',label:'Hibiya → Shibuya ~25 min · ¥210'},{type:'uber',label:'Uber ~¥1,500 · SAR 37'}] },
+  { num:'🎨', name:'teamLab Planets · Toyosu', when:'Tokyo stay · Book in advance', lat:35.6491207, lng:139.7897739, fromLat:HOTEL_TOKYO.lat, fromLng:HOTEL_TOKYO.lng, tags:[{type:'metro',label:'Mita → Toyosu ~20 min · ¥210'},{type:'uber',label:'Uber ~¥1,600 · SAR 40'}] },
+  { num:'🌳', name:'Shinjuku Gyoen Garden', when:'Tokyo stay · Closed Mon & Thu', lat:35.685176299999995, lng:139.7100517, fromLat:HOTEL_TOKYO.lat, fromLng:HOTEL_TOKYO.lng, tags:[{type:'metro',label:'Marunouchi line ~30 min · ¥210'},{type:'uber',label:'Uber ~¥2,000 · SAR 50'}] },
+  { num:'🗼', name:'Tokyo Skytree', when:'Tokyo stay · Best at night · Book in advance', lat:35.7100627, lng:139.81070040000003, fromLat:HOTEL_TOKYO.lat, fromLng:HOTEL_TOKYO.lng, tags:[{type:'metro',label:'Asakusa line → Oshiage ~28 min · ¥210'},{type:'uber',label:'Uber ~¥2,500 · SAR 62'}] },
+];
+
+function renderDestinations(data, containerId, color, numClass) {
+  const container = document.getElementById(containerId);
+  if (!container) return;
+  container.innerHTML = data.map((d,i) => buildCard(d, color, numClass)).join('');
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+  renderDestinations(osakaData, 'osaka-destinations', 'osaka', 'num-osaka');
+  renderDestinations(kyotoData, 'kyoto-destinations', 'kyoto', 'num-kyoto');
+  renderDestinations(fujiData, 'fuji-destinations', 'fuji', 'num-fuji');
+  renderDestinations(tokyoData, 'tokyo-destinations', 'tokyo', 'num-tokyo');
+});
+function tick() {
+  const diff = dep - new Date();
+  if (diff <= 0) { ['cd-d','cd-h','cd-m','cd-s'].forEach(id => document.getElementById(id).textContent = '0'); return; }
+  document.getElementById('cd-d').textContent = Math.floor(diff/86400000);
+  document.getElementById('cd-h').textContent = String(Math.floor((diff%86400000)/3600000)).padStart(2,'0');
+  document.getElementById('cd-m').textContent = String(Math.floor((diff%3600000)/60000)).padStart(2,'0');
+  document.getElementById('cd-s').textContent = String(Math.floor((diff%60000)/1000)).padStart(2,'0');
+}
+tick(); setInterval(tick, 1000);
+
+function showPage(name) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById('page-' + name).classList.add('active');
+  document.getElementById('nav-' + name).classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+function goCity(city) { showPage('cities'); setTimeout(() => switchCity(city), 60); }
+
+function switchCity(city) {
+  document.querySelectorAll('.city-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.city-panel').forEach(p => p.classList.remove('active'));
+  const tab = document.querySelector('.city-tab[data-city="' + city + '"]');
+  tab.classList.add('active');
+  document.getElementById('cpanel-' + city).classList.add('active');
+  tab.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+}
+
+function toggleCheck(el) {
+  el.classList.toggle('done');
+  const total = document.querySelectorAll('.check-item').length;
+  const done = document.querySelectorAll('.check-item.done').length;
+  document.getElementById('check-progress').textContent = done + ' / ' + total + ' completed';
+}
+</script>
+</body>
+</html>
